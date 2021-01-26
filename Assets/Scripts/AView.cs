@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AView : MonoBehaviour
+public abstract class AView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float weight;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract CameraConfiguration GetConfiguration();
 }
