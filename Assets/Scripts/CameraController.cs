@@ -19,25 +19,25 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    #region oldLerp
+
     public CameraConfiguration configA;
     public CameraConfiguration configB;
 
     [Range(0, 360)]
-    public float yaw;
+    private float yaw;
 
     [Range(-90, 90)]
-    public float pitch;
+    private float pitch;
 
     [Range(-180, 180)]
-    public float roll;
+    private float roll;
 
-    public Vector3 pivot;
+    private Vector3 pivot;
 
-    public float distance;
+    private float distance;
 
-    [Range(1, 179)]
-    public float fov;
-
+    /*
     [Space(1)]
     [Header("Lerp")]
     public bool useLerpValue = true;
@@ -82,5 +82,20 @@ public class CameraController : MonoBehaviour
         transform.rotation = orientation;
         Vector3 offset = orientation * (Vector3.back * distance);
         transform.position = pivot + offset;
+    }
+    */
+
+    #endregion
+
+    private List<AView> activeViews = new List<AView>();
+
+    public void AddView(AView view)
+    {
+        activeViews.Add(view);
+    }
+
+    public void RemoveView(AView view)
+    {
+        activeViews.Remove(view);
     }
 }
