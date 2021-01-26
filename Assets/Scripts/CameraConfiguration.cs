@@ -30,4 +30,15 @@ public class CameraConfiguration : MonoBehaviour
         Vector3 offset = GetRotation() * (Vector3.back * distance);
         return pivot + offset;
     }
+
+    public void DrawGizmos(Color color)
+    {
+        Gizmos.color = color;
+        Gizmos.DrawSphere(pivot, 0.25f);
+        Vector3 position = GetPosition();
+        Gizmos.DrawLine(pivot, position);
+        Gizmos.matrix = Matrix4x4.TRS(position, GetRotation(), Vector3.one);
+        Gizmos.DrawFrustum(Vector3.zero, fov, 0.5f, 0f, Camera.main.aspect);
+        Gizmos.matrix = Matrix4x4.identity;
+    }
 }
