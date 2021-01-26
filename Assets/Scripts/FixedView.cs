@@ -18,7 +18,7 @@ public class FixedView : AView
 
     public override CameraConfiguration GetConfiguration()
     {
-        CameraConfiguration config = new CameraConfiguration();
+        config = new CameraConfiguration();
         config.yaw = yaw;
         config.pitch = pitch;
         config.roll = roll;
