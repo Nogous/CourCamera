@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraConfiguration : MonoBehaviour
+[System.Serializable]
+public class CameraConfiguration
 {
     [Range(0, 360)]
     public float yaw = 0f;
@@ -13,12 +14,12 @@ public class CameraConfiguration : MonoBehaviour
     [Range(-180, 180)]
     public float roll = 0f;
 
-    public Vector3 pivot;
+    public Vector3 pivot = Vector3.zero;
 
-    public float distance;
+    public float distance = 0;
 
     [Range(1,179)]
-    public float fov = 60;
+    public float fov = 60f;
 
     public Quaternion GetRotation()
     {
@@ -34,7 +35,7 @@ public class CameraConfiguration : MonoBehaviour
     public void DrawGizmos(Color color)
     {
         Gizmos.color = color;
-        Gizmos.DrawSphere(pivot, 0.25f);
+        Gizmos.DrawSphere(pivot, .25f);
         Vector3 position = GetPosition();
         Gizmos.DrawLine(pivot, position);
         Gizmos.matrix = Matrix4x4.TRS(position, GetRotation(), Vector3.one);
