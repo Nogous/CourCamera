@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+
+    private void Awake()
+    {
+        if(instance == null){
+
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
+        } else
+        {
+            Destroy(this);
+        }
+    }
+
     public CameraConfiguration configA;
     public CameraConfiguration configB;
 
