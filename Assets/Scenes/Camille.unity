@@ -313,17 +313,18 @@ MonoBehaviour:
     yaw: 0
     pitch: 0
     roll: 0
-    pivot: {x: 0, y: 0, z: 0}
+    pivot: {x: 0, y: 1, z: -10}
     distance: 0
     fov: 60
   configTarget:
-    yaw: 0
-    pitch: 0
-    roll: 0
-    pivot: {x: 0, y: 0, z: 0}
+    yaw: 90
+    pitch: 33
+    roll: -80
+    pivot: {x: 5, y: 1, z: -6}
     distance: 0
     fov: 60
-  cameraSpeed: 0.1
+  cameraMoveSpeed: 0.1
+  smoothMove: 0
 --- !u!1 &1317003861
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.851
-  isActiveOnStart: 1
+  isActiveOnStart: 0
   yaw: 180
   pitch: 0
   roll: 0
@@ -496,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.253
-  isActiveOnStart: 1
+  isActiveOnStart: 0
   yaw: 270
   pitch: 0
   roll: 0
