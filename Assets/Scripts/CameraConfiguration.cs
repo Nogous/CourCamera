@@ -16,7 +16,7 @@ public class CameraConfiguration
 
     public Vector3 pivot = Vector3.zero;
 
-    public float distance = 0;
+    public float distance = 0f;
 
     [Range(1,179)]
     public float fov = 60f;

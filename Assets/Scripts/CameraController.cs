@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
     {
         CameraConfiguration config = new CameraConfiguration();
 
-        if (activeViews.Count <= 0)
+        if (activeViews.Count > 0)
         {
             float weight = 0f;
             bool weightZero;
