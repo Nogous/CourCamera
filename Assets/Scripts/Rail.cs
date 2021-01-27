@@ -22,8 +22,6 @@ public class Rail : MonoBehaviour
         {
             length += Vector3.Distance(transform.GetChild(transform.childCount -1).position, transform.GetChild(0).position);
         }
-
-        Debug.Log(GetPosition(8));
     }
 
     // Update is called once per frame
@@ -55,6 +53,11 @@ public class Rail : MonoBehaviour
             {
                 distance = length - distance;
             }
+        }
+        else
+        {
+            if (distance > length) return;
+            else if (distance < 0) return;
         }
 
         for (int i = 0; i < transform.childCount; i++)
