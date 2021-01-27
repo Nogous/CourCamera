@@ -56,8 +56,8 @@ public class Rail : MonoBehaviour
         }
         else
         {
-            if (distance > length) return;
-            else if (distance < 0) return;
+            if (distance > length) return transform.GetChild(transform.childCount -1).position;
+            else if (distance < 0) return transform.GetChild(0).position;
         }
 
         for (int i = 0; i < transform.childCount; i++)
