@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     public CameraConfiguration configCommon;
     public CameraConfiguration configTarget;
 
-    public float cameraMoveSpeed = 0.1f;
+    public float cameraMoveSpeed = 0.2f;
 
     private float elapsedTime = 0;
 
@@ -52,6 +52,10 @@ public class CameraController : MonoBehaviour
         if (smoothMove)
         {
             SmoothMovement();
+
+            transform.position = configCommon.GetPosition();
+            transform.rotation = configCommon.GetRotation();
+            cameraComponent.fieldOfView = configCommon.fov;
         }
         else
         {
@@ -118,19 +122,37 @@ public class CameraController : MonoBehaviour
 
     private void SmoothMovement()
     {
-        elapsedTime += Time.deltaTime;
-        if (cameraMoveSpeed * elapsedTime < 1)
+        
+        if (cameraMoveSpeed * Time.deltaTime < 1)
         {
-            transform.position = Vector3.Lerp(configCommon.GetPosition(), configTarget.GetPosition(), cameraMoveSpeed * elapsedTime);
-            transform.rotation = Quaternion.Lerp(configCommon.GetRotation(), configTarget.GetRotation(), cameraMoveSpeed * elapsedTime);
-            cameraComponent.fieldOfView = Mathf.Lerp(configCommon.fov, configTarget.fov, cameraMoveSpeed * elapsedTime);
+            configCommon.pivot = configCommon.pivot + (configTarget.pivot - configCommon.pivot) * cameraMoveSpeed * Time.deltaTime;
+            configCommon.yaw = configCommon.yaw + (configTarget.yaw - configCommon.yaw) * cameraMoveSpeed * Time.deltaTime;
+            configCommon.roll = configCommon.roll + (configTarget.roll - configCommon.roll) * cameraMoveSpeed * Time.deltaTime;
+            configCommon.pitch = configCommon.pitch + (configTarget.pitch - configCommon.pitch) * cameraMoveSpeed * Time.deltaTime;
+            configCommon.fov = configCommon.fov + (configTarget.fov - configCommon.fov) * cameraMoveSpeed * Time.deltaTime;
+            configCommon.distance = configCommon.distance + (configTarget.distance - configCommon.distance) * cameraMoveSpeed * Time.deltaTime;
         }
         else
         {
-            transform.position = configTarget.GetPosition();
-            transform.rotation = configTarget.GetRotation();
-            cameraComponent.fieldOfView = configTarget.fov;
+            configCommon.yaw = configTarget.yaw;
+            configCommon.roll = configTarget.roll;
+            configCommon.pitch = configTarget.pitch;
+            configCommon.fov = configTarget.fov;
+            configCommon.pivot = configTarget.pivot;
+            configCommon.distance = configTarget.distance;
         }
             
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(configCommon != null)
+        {
+            configCommon.DrawGizmos(Color.green);
+        }
+        if(configTarget != null)
+        {
+            configTarget.DrawGizmos(Color.blue);
+        }
     }
 }
