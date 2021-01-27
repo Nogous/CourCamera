@@ -451,13 +451,13 @@ MonoBehaviour:
     distance: 0
     fov: 60
   configTarget:
-    yaw: 90
+    yaw: 0
     pitch: 33
-    roll: -80
+    roll: 40
     pivot: {x: 5, y: 1, z: -6}
     distance: 0
     fov: 60
-  cameraMoveSpeed: 0.1
+  cameraMoveSpeed: 0
   smoothMove: 0
 --- !u!1 &1317003861
 GameObject:
