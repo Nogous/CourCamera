@@ -16,29 +16,36 @@ public class DollyView : AView
 
     public Rail rail;
 
-    public float railPosition = 0;
+    private float railPosition = 0f;
 
     public float speed = 1f;
 
-    //[Range(0,1)]
-    public float currentPos = 0f;
+    public bool isAuto = false;
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        if (isAuto)
         {
-            currentPos += Time.deltaTime * speed;
+            railPosition += Time.deltaTime * speed;
         }
-        else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        else
         {
-            currentPos -= Time.deltaTime * speed;
+            if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                railPosition += Time.deltaTime * speed;
+            }
+            else if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                railPosition -= Time.deltaTime * speed;
+            }
         }
+
     }
 
     public override CameraConfiguration GetConfiguration()
     {
 
-        config.pivot = rail.GetPosition(currentPos);
+        config.pivot = rail.GetPosition(railPosition);
         Vector3 dir = (target.transform.position - config.pivot).normalized;
 
         config.yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
