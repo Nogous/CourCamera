@@ -10,8 +10,7 @@ public class FixedFollowView : AView
     [Range(1, 179)]
     public float fov = 60;
 
-    public Vector3 target = new Vector3();
-
+    public GameObject target;
     public GameObject centralPoint;
 
     public float yawOffsetMax = 10f;
@@ -19,7 +18,7 @@ public class FixedFollowView : AView
 
     public override CameraConfiguration GetConfiguration()
     {
-        Vector3 dir = target - transform.position;
+        Vector3 dir = (target.transform.position - transform.position).normalized;
 
         config.yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
         config.pitch = -Mathf.Asin(dir.y) * Mathf.Rad2Deg;
@@ -29,38 +28,52 @@ public class FixedFollowView : AView
         config.fov = fov;
 
 
-        Vector3 dirCenter = centralPoint.transform.position;
+        Vector3 dirCenter = (centralPoint.transform.position - transform.position).normalized;
 
         float yawCenter = Mathf.Atan2(dirCenter.x, dirCenter.z) * Mathf.Rad2Deg;
-        if (yawCenter >= 0)
+
+        float dif = config.yaw - yawCenter;
+
+        if (dif < -180)
         {
-            if (config.yaw > yawCenter)
-            {
-                config.yaw = yawCenter;
-            }
+            dif += 360;
         }
-        else
+        if (dif > 180)
         {
-            if (config.yaw < yawCenter)
-            {
-                config.yaw = yawCenter;
-            }
+            dif -= 360;
+        }
+
+        //Debug.Log(con);
+
+        if (dif > yawOffsetMax)
+        {
+            config.yaw = yawCenter + yawOffsetMax;
+        }
+        else if (dif < -yawOffsetMax)
+        {
+            config.yaw = yawCenter - yawOffsetMax;
         }
 
         float pitchCenter = -Mathf.Asin(dirCenter.y) * Mathf.Rad2Deg;
-        if (pitchCenter >= 0)
+
+        float dif2 = pitchCenter - config.pitch;
+
+        if (dif2 < -180)
         {
-            if (config.yaw > pitchCenter)
-            {
-                config.yaw = pitchCenter;
-            }
+            dif2 += 360;
         }
-        else
+        if (dif2 > 180)
         {
-            if (config.yaw < pitchCenter)
-            {
-                config.yaw = pitchCenter;
-            }
+            dif2 -= 360;
+        }
+
+        if (dif2 > pitchOffsetMax)
+        {
+            config.pitch = pitchCenter + pitchOffsetMax;
+        }
+        else if (dif2 < -pitchOffsetMax)
+        {
+            config.pitch = pitchCenter - pitchOffsetMax;
         }
 
 

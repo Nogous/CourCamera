@@ -10,6 +10,8 @@ public abstract class AView : MonoBehaviour
 
     protected CameraConfiguration config = new CameraConfiguration();
 
+    public Color color = Color.red;
+
     public virtual CameraConfiguration GetConfiguration()
     {
         return config;
@@ -37,6 +39,9 @@ public abstract class AView : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        GetConfiguration().DrawGizmos(Color.red);
+        if (GetConfiguration() != null)
+        {
+            GetConfiguration().DrawGizmos(color);
+        }
     }
 }
