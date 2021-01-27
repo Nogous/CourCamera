@@ -37,12 +37,13 @@ public class DollyView : AView
 
     public override CameraConfiguration GetConfiguration()
     {
-        Vector3 dir = (target.transform.position - transform.position).normalized;
+
+        config.pivot = rail.GetPosition(currentPos);
+        Vector3 dir = (target.transform.position - config.pivot).normalized;
 
         config.yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
         config.pitch = -Mathf.Asin(dir.y) * Mathf.Rad2Deg;
         config.roll = roll;
-        config.pivot = rail.GetPosition(currentPos * rail.GetLength());
         config.distance = 0;
         config.fov = fov;
 
