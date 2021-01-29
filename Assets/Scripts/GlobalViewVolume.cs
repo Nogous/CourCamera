@@ -7,6 +7,6 @@ public class GlobalViewVolume : AViewVolume
     // Start is called before the first frame update
     void Start()
     {
-        view.SetActive(true);
+        SetActive(true);
     }
 }

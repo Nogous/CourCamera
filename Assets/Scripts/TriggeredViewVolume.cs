@@ -15,11 +15,11 @@ public class TriggeredViewVolume : AViewVolume
 
     private void OnTriggerEnter(Collider other)
     {
-        view.SetActive(true);   
+        SetActive(true);   
     }
 
     private void OnTriggerExit(Collider other)
     {
-        view.SetActive(false);
+        SetActive(false);
     }
 }

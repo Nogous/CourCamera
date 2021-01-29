@@ -23,15 +23,27 @@ public class ViewVolumeBlender : MonoBehaviour
     private List<AViewVolume> ActiveViewVolumes = new List<AViewVolume>();
     private Dictionary<AView, List<AViewVolume>> VolumesPerViews = new Dictionary<AView, List<AViewVolume>>();
 
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        int heightsPrio = int.MinValue;
+
+        foreach (AViewVolume item in ActiveViewVolumes)
+        {
+            item.view.weight = 0;
+            if (item.priority> heightsPrio)
+            {
+                heightsPrio = item.priority;
+            }
+        }
+        foreach (AViewVolume item in ActiveViewVolumes)
+        {
+            if (heightsPrio == item.priority)
+            {
+                item.view.weight = item.ComputeSelfWeight();
+            }
+        }
     }
 
     public void AddVolume(AViewVolume viewVolume)
@@ -44,31 +56,30 @@ public class ViewVolumeBlender : MonoBehaviour
             viewVolume.view.SetActive(true);
         }
 
-        foreach(var i in VolumesPerViews)
-        {
-            if(i.Key == viewVolume.view)
-            {
-                i.Value.Add(viewVolume);
-            }
-        }
-        
+        VolumesPerViews[viewVolume.view].Add(viewVolume);
     }
     public void RemoveVolume(AViewVolume viewVolume)
     {
         ActiveViewVolumes.Remove(viewVolume);
 
-        foreach (var i in VolumesPerViews)
+        if (VolumesPerViews.ContainsKey(viewVolume.view))
         {
-            if (i.Key == viewVolume.view)
-            {
-                i.Value.Remove(viewVolume);
+            VolumesPerViews[viewVolume.view].Remove(viewVolume);
 
-                if(i.Value.Count == 0)
-                {
-                    VolumesPerViews.Remove(i.Key);
-                    i.Key.SetActive(false);
-                }
+            if (VolumesPerViews[viewVolume.view].Count <= 0)
+            {
+                VolumesPerViews.Remove(viewVolume.view);
+                viewVolume.view.SetActive(false);
             }
+        }
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Label("coucou");
+        foreach (AViewVolume item in ActiveViewVolumes)
+        {
+            GUILayout.Label(item.name);
         }
     }
 }

@@ -70,8 +70,6 @@ public class Rail : MonoBehaviour
         return Vector3.zero;
     }
 
-    public GameObject draw;
-
     public float NearPosOnRail(Vector3 target)
     {
         float distance = Mathf.Infinity;
