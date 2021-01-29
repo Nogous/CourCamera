@@ -96,58 +96,47 @@ public class Rail : MonoBehaviour
         ////////////////////////////////////////////////////
 
         Vector3 dir;
+        Vector3 dir2;
 
-        if (node>= transform.childCount-1)
-            dir = transform.GetChild(0).position - transform.GetChild(node).position;
+        Vector3 nodePos = transform.GetChild(node).position;
+
+        if (node >= transform.childCount-1)
+            dir = transform.GetChild(0).position - nodePos;
         else
-            dir = transform.GetChild(node+1).position - transform.GetChild(node).position;
+            dir = transform.GetChild(node+1).position - nodePos;
 
-        Vector3 pos = Vector3.Project(target - transform.GetChild(node).position, dir) + transform.GetChild(node).position;
-        distance = Vector3.Distance(pos, transform.GetChild(node).position);
-        if (dir.normalized == (pos - transform.GetChild(node).position).normalized)
+
+        if (node == 0)
+            dir2 = transform.GetChild(transform.childCount - 1).position - nodePos;
+        else
+            dir2 = transform.GetChild(node - 1).position - nodePos;
+
+        float dot1 = Vector3.Dot(dir.normalized,target-nodePos);
+
+        dot1 = Mathf.Clamp(dot1, 0, dir.magnitude);
+
+        float dot2 = Vector3.Dot(dir2.normalized,target-nodePos);
+
+        dot2 = Mathf.Clamp(dot2, 0, dir2.magnitude);
+
+        Vector3 pos1 = nodePos + dir.normalized * dot1;
+        Vector3 pos2 = nodePos + dir2.normalized * dot2;
+
+
+
+        if (Vector3.Distance(pos1, target) < Vector3.Distance(pos2, target))
         {
-            distanceOnRail += distance;
+            distanceOnRail += dot1;
         }
         else
         {
-            if (!(node == 0 && !isLoop))
-                distanceOnRail -= distance;
+            distanceOnRail -= dot2;
         }
+
+
 
         return distanceOnRail;
 
-
-
-
-        /*
-        if (node == transform.childCount - 1)
-        {
-            if (isLoop)
-                distance = Vector3.Distance(target, GetProjectPoint(target, transform.GetChild(node).position, transform.GetChild(0).position));
-            else
-            {
-
-            }
-        }
-        else
-            distance = Vector3.Distance(target, GetProjectPoint(target, transform.GetChild(node).position, transform.GetChild(node + 1).position));
-
-        if (isLoop)
-        {
-            if (node == 0)
-            {
-                float distance2 = Vector3.Distance(target, GetProjectPoint(target, transform.GetChild(transform.childCount - 1).position, transform.GetChild(0).position));
-                if (distance2< distance)
-                {
-                    return distanceOnRail - distance2;
-                }
-                else
-                {
-                    return distanceOnRail + distance;
-                }
-            }
-        }
-        */
     }
 
     private Vector3 GetProjectPoint(Vector3 target, Vector3 node, Vector3 nextNode)
