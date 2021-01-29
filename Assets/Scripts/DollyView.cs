@@ -25,9 +25,7 @@ public class DollyView : AView
     private void Update()
     {
         if (isAuto)
-        {
-            railPosition += Time.deltaTime * speed;
-        }
+            railPosition = rail.NearPosOnRail(target.transform.position);
         else
         {
             if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
@@ -44,8 +42,8 @@ public class DollyView : AView
 
     public override CameraConfiguration GetConfiguration()
     {
+            config.pivot = rail.GetPosition(railPosition);
 
-        config.pivot = rail.GetPosition(railPosition);
         Vector3 dir = (target.transform.position - config.pivot).normalized;
 
         config.yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
