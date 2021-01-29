@@ -76,7 +76,6 @@ public class ViewVolumeBlender : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.Label("coucou");
         foreach (AViewVolume item in ActiveViewVolumes)
         {
             GUILayout.Label(item.name);

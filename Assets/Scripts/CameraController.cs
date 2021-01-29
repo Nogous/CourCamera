@@ -47,6 +47,61 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        configTarget = new CameraConfiguration();
+
+        if (activeViews.Count > 0)
+        {
+            float weight = 0f;
+            bool weightZero;
+
+            foreach (AView view in activeViews)
+            {
+                weight += view.weight;
+            }
+
+            if (weight == 0)
+                weightZero = true;
+            else
+                weightZero = false;
+
+            if (weightZero)
+            {
+                foreach (AView view in activeViews)
+                {
+                    CameraConfiguration tmpConfig = view.GetConfiguration();
+                    configTarget.yaw += tmpConfig.yaw;
+                    configTarget.pitch += tmpConfig.pitch;
+                    configTarget.roll += tmpConfig.roll;
+                    configTarget.fov += tmpConfig.fov;
+                    configTarget.pivot += tmpConfig.pivot;
+                    configTarget.distance += tmpConfig.distance;
+
+                    weight++;
+                }
+            }
+            else
+            {
+                foreach (AView view in activeViews)
+                {
+                    CameraConfiguration tmpConfig = view.GetConfiguration();
+                    configTarget.yaw += tmpConfig.yaw * view.weight;
+                    configTarget.pitch += tmpConfig.pitch * view.weight;
+                    configTarget.roll += tmpConfig.roll * view.weight;
+                    configTarget.fov += tmpConfig.fov * view.weight;
+                    configTarget.pivot += tmpConfig.pivot * view.weight;
+                    configTarget.distance += tmpConfig.distance * view.weight;
+                }
+            }
+
+            configTarget.yaw /= weight;
+            configTarget.pitch /= weight;
+            configTarget.roll /= weight;
+            configTarget.fov /= weight;
+            configTarget.pivot /= weight;
+            configTarget.distance /= weight;
+        }
+
+
         if (smoothMove)
         {
             SmoothMovement();
@@ -57,65 +112,11 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            configCommon = new CameraConfiguration();
-
-            if (activeViews.Count > 0)
-            {
-                float weight = 0f;
-                bool weightZero;
-
-                foreach (AView view in activeViews)
-                {
-                    weight += view.weight;
-                }
-
-                if (weight == 0)
-                    weightZero = true;
-                else
-                    weightZero = false;
-
-                if (weightZero)
-                {
-                    foreach (AView view in activeViews)
-                    {
-                        CameraConfiguration tmpConfig = view.GetConfiguration();
-                        configCommon.yaw += tmpConfig.yaw;
-                        configCommon.pitch += tmpConfig.pitch;
-                        configCommon.roll += tmpConfig.roll;
-                        configCommon.fov += tmpConfig.fov;
-                        configCommon.pivot += tmpConfig.pivot;
-                        configCommon.distance += tmpConfig.distance;
-
-                        weight++;
-                    }
-                }
-                else
-                {
-                    foreach (AView view in activeViews)
-                    {
-                        CameraConfiguration tmpConfig = view.GetConfiguration();
-                        configCommon.yaw += tmpConfig.yaw * view.weight;
-                        configCommon.pitch += tmpConfig.pitch * view.weight;
-                        configCommon.roll += tmpConfig.roll * view.weight;
-                        configCommon.fov += tmpConfig.fov * view.weight;
-                        configCommon.pivot += tmpConfig.pivot * view.weight;
-                        configCommon.distance += tmpConfig.distance * view.weight;
-                    }
-                }
-
-                configCommon.yaw /= weight;
-                configCommon.pitch /= weight;
-                configCommon.roll /= weight;
-                configCommon.fov /= weight;
-                configCommon.pivot /= weight;
-                configCommon.distance /= weight;
-            }
-
-
-            transform.rotation = configCommon.GetRotation();
-            transform.position = configCommon.GetPosition();
-            //cameraComponent.fieldOfView = configCommon.fov;
+            transform.rotation = configTarget.GetRotation();
+            transform.position = configTarget.GetPosition();
+            cameraComponent.fieldOfView = configTarget.fov;
         }
+
     }
 
     private void SmoothMovement()
@@ -144,9 +145,9 @@ public class CameraController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(configCommon != null)
+        if(configTarget != null)
         {
-            configCommon.DrawGizmos(Color.green);
+            configTarget.DrawGizmos(Color.green);
         }
         if(configTarget != null)
         {
