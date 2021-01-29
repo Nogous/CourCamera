@@ -24,8 +24,6 @@ public class CameraController : MonoBehaviour
 
     public float cameraMoveSpeed = 0.2f;
 
-    private float elapsedTime = 0;
-
     public bool smoothMove = false;
 
     private List<AView> activeViews = new List<AView>();
