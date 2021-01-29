@@ -56,5 +56,19 @@ public class ViewVolumeBlender : MonoBehaviour
     public void RemoveVolume(AViewVolume viewVolume)
     {
         ActiveViewVolumes.Remove(viewVolume);
+
+        foreach (var i in VolumesPerViews)
+        {
+            if (i.Key == viewVolume.view)
+            {
+                i.Value.Remove(viewVolume);
+
+                if(i.Value.Count == 0)
+                {
+                    VolumesPerViews.Remove(i.Key);
+                    i.Key.SetActive(false);
+                }
+            }
+        }
     }
 }
