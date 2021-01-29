@@ -30,16 +30,6 @@ public class Curve : MonoBehaviour
         Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(C), .25f);
         Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(D), .25f);
 
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.1f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.2f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.3f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.4f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.5f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.6f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.7f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.8f, localToWorldMatrix)), .10f);
-        Gizmos.DrawSphere(localToWorldMatrix.MultiplyPoint(GetPositionWorld(0.9f, localToWorldMatrix)), .10f);
-
     }
 
     private void OnDrawGizmos()

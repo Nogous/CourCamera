@@ -14,7 +14,7 @@ public class FreeFollowView : AView
     public GameObject target;
 
     public Curve curve;
-    public Vector3 curvePosition;
+    public float curvePosition;
     public float curveSpeed;
 
     private float camYaw;
@@ -31,8 +31,8 @@ public class FreeFollowView : AView
     // Update is called once per frame
     void Update()
     {
-        yaw += Input.GetAxis("Horizontal") * yawSpeed * Time.deltaTime;
+        yaw -= Input.GetAxis("Horizontal") * yawSpeed * Time.deltaTime * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(pitch[1], -yaw*Mathf.Rad2Deg +90, roll[1]);
+        transform.rotation = Quaternion.Euler(pitch[1], yaw +90, roll[1]);
     }
 }
