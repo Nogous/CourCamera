@@ -19,7 +19,7 @@ public class CameraConfiguration
     public float distance = 0f;
 
     [Range(1,179)]
-    public float fov = 60f;
+    public float fov = 0f;
 
     public Quaternion GetRotation()
     {

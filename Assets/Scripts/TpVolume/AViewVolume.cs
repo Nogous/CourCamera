@@ -17,6 +17,8 @@ public abstract class AViewVolume : MonoBehaviour
 
     protected void SetActive(bool isActive)
     {
+        if (IsActive == isActive) return;
+
         IsActive = isActive;
         if (isActive) ViewVolumeBlender.instance.AddVolume(this);
         else ViewVolumeBlender.instance.RemoveVolume(this);
