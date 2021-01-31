@@ -25,7 +25,7 @@ public abstract class AView : MonoBehaviour
         }*/
     }
 
-    public void SetActive(bool isActive)
+    public virtual void SetActive(bool isActive)
     {
         if (isActive)
         {
