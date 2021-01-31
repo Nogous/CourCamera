@@ -50,6 +50,8 @@ public class ViewVolumeBlender : MonoBehaviour
     {
         ActiveViewVolumes.Add(viewVolume);
 
+        Achivement.instance.UnlockAchivement(AchivementList.Suivre_le_joueur);
+
         if (!VolumesPerViews.ContainsKey(viewVolume.view))
         {
             VolumesPerViews.Add(viewVolume.view, new List<AViewVolume>());
