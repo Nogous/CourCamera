@@ -20,7 +20,7 @@ public class Unlocker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _checker.UnlockSwitch(this, _id);
         GetComponent<Renderer>().material.color = Color.green;
+        _checker.UnlockSwitch(this, _id);
     }
 }
