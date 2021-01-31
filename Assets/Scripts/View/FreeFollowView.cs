@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class FreeFollowView : AView
 {
-
     public float[] pitch;
     public float[] roll;
     public float[] fov;
+
     public float yaw;
     public float yawSpeed;
+
     public GameObject target;
     public Curve curve;
     public float curvePosition;
@@ -72,15 +73,15 @@ public class FreeFollowView : AView
         return config;
     }
 
-    private float Lerp(float[] tab, float position)
+    private float Lerp(float[] list, float position)
     {
         if (position <= 0.5)
         {
-            return Mathf.Lerp(tab[0], tab[1], position * 2);
+            return Mathf.Lerp(list[0], list[1], position * 2);
         }
         else
         {
-            return Mathf.Lerp(tab[1], tab[2], (position - 0.5f) * 2);
+            return Mathf.Lerp(list[1], list[2], (position - 0.5f) * 2);
         }
     }
 }
