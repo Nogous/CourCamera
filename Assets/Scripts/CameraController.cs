@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
 
     private Camera cameraComponent;
 
+    private bool isCutRequested = false;
+
     private void Start()
     {
         cameraComponent = GetComponent<Camera>();
@@ -117,6 +119,7 @@ public class CameraController : MonoBehaviour
             cameraComponent.fieldOfView = configTarget.fov;
         }
 
+
     }
 
     private void SmoothMovement()
@@ -140,8 +143,25 @@ public class CameraController : MonoBehaviour
             configCommon.pivot = configTarget.pivot;
             configCommon.distance = configTarget.distance;
         }
-            
+
+        if (isCutRequested)
+        {
+            configCommon.yaw = configTarget.yaw;
+            configCommon.pitch = configTarget.pitch;
+            configCommon.roll = configTarget.roll;
+            configCommon.fov = configTarget.fov;
+            configCommon.pivot = configTarget.pivot;
+            configCommon.distance = configTarget.distance;
+
+            isCutRequested = false;
+        }
     }
+
+    public void Cut()
+    {
+        isCutRequested = true;
+    }
+
 
     private void OnDrawGizmos()
     {
